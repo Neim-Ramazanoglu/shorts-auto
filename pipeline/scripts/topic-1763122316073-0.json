@@ -1,0 +1,17 @@
+{
+  "id": "topic-1763122316073-0",
+  "script": "Zekat ve sadaka, toplumun dayanışma ruhunu güçlendirir! 1. Zekat, maddi durumunu iyileştirmek isteyenler için bir fırsattır. 2. Sadaka, sadece maddi değil, manevi kazanç da sağlar! 3. Bu iki ibadet, sosyal adaleti sağlamak için kritik öneme sahiptir. Daha fazlası için takip et!",
+  "bullets": [
+    "Giriş: Zekat ve sadaka, toplumun dayanışma ruhunu güçlendirir!",
+    "Gerçek 1: Zekat, maddi durumunu iyileştirmek isteyenler için bir fırsattır.",
+    "Gerçek 2: Sadaka, sadece maddi değil, manevi kazanç da sağlar!",
+    "Gerçek 3: Bu iki ibadet, sosyal adaleti sağlamak için kritik öneme sahiptir.",
+    "CTA: Daha fazlası için takip et!"
+  ],
+  "recommendedVoiceSpeed": "normal",
+  "createdAt": "2025-11-14T12:12:01.266Z",
+  "audioPath": "./pipeline/audio/topic-1763122316073-0.mp3",
+  "audioMetadataPath": "./pipeline/audio/topic-1763122316073-0.json",
+  "status": "voiced",
+  "voicedAt": "2025-11-14T12:12:06.362Z"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "shorts-auto",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node pipeline/run_all.js",
+    "render": "node src/render.js",
+    "upload": "node src/upload.js",
+    "start": "node src/server.js",
+    "dev": "node src/server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "googleapis": "^126.0.0"
+  },
+  "license": "MIT"
+}

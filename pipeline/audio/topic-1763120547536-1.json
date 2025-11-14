@@ -1,0 +1,10 @@
+{
+  "durationSeconds": 21.2,
+  "voiceSettings": {
+    "provider": "openai",
+    "model": "gpt-4o-mini-tts",
+    "voice": "alloy",
+    "format": "mp3"
+  },
+  "generatedAt": "2025-11-14T11:52:29.983Z"
+}

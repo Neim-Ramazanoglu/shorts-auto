@@ -1,0 +1,17 @@
+{
+  "id": "topic-1763120547536-2",
+  "script": "Think you know everything about animal adaptations? Think again! Did you know the male seahorse carries babies in a pouch? Or that the axolotl can regenerate entire limbs? And get this: the tarsier has eyes that are bigger than its brain! Nature is wild, right? Follow for more wild facts!",
+  "bullets": [
+    "Hook: Think you know everything about animal adaptations? Think again!",
+    "Fact 1: Did you know the male seahorse carries babies in a pouch?",
+    "Fact 2: The axolotl can regenerate entire limbs?",
+    "Fact 3: The tarsier has eyes that are bigger than its brain!",
+    "CTA: Follow for more wild facts!"
+  ],
+  "recommendedVoiceSpeed": "fast",
+  "createdAt": "2025-11-14T11:52:05.470Z",
+  "audioPath": "./pipeline/audio/topic-1763120547536-2.mp3",
+  "audioMetadataPath": "./pipeline/audio/topic-1763120547536-2.json",
+  "status": "voiced",
+  "voicedAt": "2025-11-14T11:52:33.369Z"
+}

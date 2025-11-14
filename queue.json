@@ -1,0 +1,77 @@
+[
+  {
+    "id": "topic-1763113470509-0",
+    "topic": "Quick creativity exercise",
+    "tags": [
+      "general",
+      "quick",
+      "creativity",
+      "exercise"
+    ],
+    "priority": 2,
+    "createdAt": "2025-11-14T09:44:30.509Z",
+    "status": "scripted",
+    "scriptPath": "./pipeline/scripts/topic-1763113470509-0.json"
+  },
+  {
+    "id": "topic-1763120547536-0",
+    "topic": "Strange animal adaptations you have never heard of",
+    "tags": [
+      "interesting-facts",
+      "strange",
+      "animal",
+      "adaptations",
+      "you",
+      "have"
+    ],
+    "priority": 2,
+    "createdAt": "2025-11-14T11:42:27.536Z",
+    "status": "scripted",
+    "scriptPath": "./pipeline/scripts/topic-1763120547536-0.json"
+  },
+  {
+    "id": "topic-1763120547536-1",
+    "topic": "Record-breaking scientific discoveries",
+    "tags": [
+      "interesting-facts",
+      "recordbreaking",
+      "scientific",
+      "discoveries"
+    ],
+    "priority": 3,
+    "createdAt": "2025-11-14T11:42:27.548Z",
+    "status": "scripted",
+    "scriptPath": "./pipeline/scripts/topic-1763120547536-1.json"
+  },
+  {
+    "id": "topic-1763120547536-2",
+    "topic": "Strange animal adaptations you have never heard of",
+    "tags": [
+      "interesting-facts",
+      "strange",
+      "animal",
+      "adaptations",
+      "you",
+      "have"
+    ],
+    "priority": 3,
+    "createdAt": "2025-11-14T11:42:27.548Z",
+    "status": "scripted",
+    "scriptPath": "./pipeline/scripts/topic-1763120547536-2.json"
+  },
+  {
+    "id": "topic-1763122316073-0",
+    "topic": "Zekat ve sadakanın önemi",
+    "tags": [
+      "dini-icerikler",
+      "zekat",
+      "ve",
+      "sadakann",
+      "nemi"
+    ],
+    "priority": 3,
+    "createdAt": "2025-11-14T12:11:56.073Z",
+    "status": "scripted",
+    "scriptPath": "./pipeline/scripts/topic-1763122316073-0.json"
+  }
+]

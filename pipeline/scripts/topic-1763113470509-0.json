@@ -1,0 +1,17 @@
+{
+  "id": "topic-1763113470509-0",
+  "script": "Want to boost your creativity in just a minute? Try this quick exercise! 1) Grab a pen and paper—set a timer for 60 seconds. 2) Write down as many uses for a paperclip as you can think of. 3) Challenge yourself to think outside the box! This simple task sparks your brain's creative circuits. Ready to unleash your imagination? Follow for more wild facts!",
+  "bullets": [
+    "Want to boost your creativity in just a minute?",
+    "Grab a pen and paper—set a timer for 60 seconds.",
+    "Write down as many uses for a paperclip as you can think of.",
+    "Challenge yourself to think outside the box!",
+    "Follow for more wild facts!"
+  ],
+  "recommendedVoiceSpeed": "fast",
+  "createdAt": "2025-11-14T11:51:48.442Z",
+  "audioPath": "./pipeline/audio/topic-1763113470509-0.mp3",
+  "audioMetadataPath": "./pipeline/audio/topic-1763113470509-0.json",
+  "status": "voiced",
+  "voicedAt": "2025-11-14T11:52:19.743Z"
+}

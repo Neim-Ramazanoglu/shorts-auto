@@ -1,0 +1,8 @@
+node_modules/
+.venv/
+.env
+.DS_Store
+pipeline/uploads/
+pipeline/videos/
+*.pyc
+__pycache__/

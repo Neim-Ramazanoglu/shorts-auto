@@ -1,0 +1,17 @@
+{
+  "id": "topic-1763120547536-1",
+  "script": "Did you know the scientific world is full of record-breaking discoveries? First, in 2023, scientists created the world’s first living robots that can reproduce! Next, physicists achieved a record-breaking temperature of 1 trillion degrees Celsius in a lab, hotter than the core of the sun! Finally, astronomers discovered the largest known galaxy cluster, holding 1,000 galaxies packed together! Want more mind-blowing facts? Follow for more wild facts!",
+  "bullets": [
+    "Hook: Did you know the scientific world is full of record-breaking discoveries?",
+    "Fact 1: In 2023, scientists created the world’s first living robots that can reproduce!",
+    "Fact 2: Physicists achieved a record-breaking temperature of 1 trillion degrees Celsius in a lab!",
+    "Fact 3: Astronomers discovered the largest known galaxy cluster, holding 1,000 galaxies!",
+    "CTA: Want more mind-blowing facts? Follow for more wild facts!"
+  ],
+  "recommendedVoiceSpeed": "fast",
+  "createdAt": "2025-11-14T11:52:00.435Z",
+  "audioPath": "./pipeline/audio/topic-1763120547536-1.mp3",
+  "audioMetadataPath": "./pipeline/audio/topic-1763120547536-1.json",
+  "status": "voiced",
+  "voicedAt": "2025-11-14T11:52:29.990Z"
+}

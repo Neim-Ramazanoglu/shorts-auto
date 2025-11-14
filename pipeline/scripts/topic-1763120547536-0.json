@@ -1,0 +1,17 @@
+{
+  "id": "topic-1763120547536-0",
+  "script": "Think you know animal adaptations? Get ready for some wild surprises! 🦙 1. The male seahorse carries babies in a special pouch, flipping traditional roles! 🐴 2. The lyrebird can mimic any sound, even chainsaws and camera shutters! 🔦 3. The Tardigrade, also known as the water bear, can survive in space and extreme heat! 🌌 Curious about more? Follow for more wild facts!",
+  "bullets": [
+    "Hook: Think you know animal adaptations? Get ready for some wild surprises!",
+    "Fact 1: The male seahorse carries babies in a special pouch, flipping traditional roles!",
+    "Fact 2: The lyrebird can mimic any sound, even chainsaws and camera shutters!",
+    "Fact 3: The Tardigrade, also known as the water bear, can survive in space and extreme heat!",
+    "CTA: Curious about more? Follow for more wild facts!"
+  ],
+  "recommendedVoiceSpeed": "fast",
+  "createdAt": "2025-11-14T11:51:55.578Z",
+  "audioPath": "./pipeline/audio/topic-1763120547536-0.mp3",
+  "audioMetadataPath": "./pipeline/audio/topic-1763120547536-0.json",
+  "status": "voiced",
+  "voicedAt": "2025-11-14T11:52:24.356Z"
+}
