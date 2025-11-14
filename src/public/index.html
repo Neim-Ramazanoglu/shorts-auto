@@ -18,7 +18,7 @@
       padding: 20px;
     }
     .container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
     }
     header {
@@ -98,36 +98,66 @@
       opacity: 0.6;
       cursor: not-allowed;
     }
-    .queue-list {
+    .content-section {
       background: white;
       padding: 30px;
       border-radius: 15px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
     }
-    .queue-list h2 {
+    .content-section h2 {
       color: #667eea;
       margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .queue-item {
-      padding: 15px;
-      border-left: 4px solid #667eea;
+    .item-card {
       background: #f8f9fa;
-      margin-bottom: 10px;
-      border-radius: 5px;
+      padding: 20px;
+      border-left: 4px solid #667eea;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    .item-card:hover {
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transform: translateX(5px);
+    }
+    .item-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 10px;
+      cursor: pointer;
     }
-    .queue-item .topic {
+    .item-title {
       font-weight: 600;
+      font-size: 1.1em;
       color: #333;
+      flex: 1;
     }
-    .queue-item .status {
+    .item-meta {
+      font-size: 0.85em;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    .item-details {
+      display: none;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #dee2e6;
+    }
+    .item-details.show {
+      display: block;
+    }
+    .status {
       padding: 5px 15px;
       border-radius: 20px;
       font-size: 0.85em;
       font-weight: 600;
       text-transform: uppercase;
+      margin-left: 10px;
     }
     .status.queued { background: #ffc107; color: #000; }
     .status.scripted { background: #17a2b8; color: #fff; }
@@ -160,9 +190,429 @@
       outline: none;
       border-color: #667eea;
     }
+    .script-text {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      margin-top: 10px;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 10px;
+    }
+    .tag {
+      background: #e9ecef;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.8em;
+    }
+    audio {
+      width: 100%;
+      margin-top: 10px;
+    }
+    video {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 8px;
+      background: #000;
+      margin-top: 10px;
+    }
+    .expand-btn {
+      background: #6c757d;
+      color: white;
+      border: none;
+      padding: 5px 15px;
+      border-radius: 5px;
+      font-size: 0.9em;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    .expand-btn:hover {
+      background: #5a6268;
+    }
+    .detail-row {
+      display: flex;
+      margin-bottom: 8px;
+    }
+    .detail-label {
+      font-weight: 600;
+      min-width: 120px;
+      color: #495057;
+    }
+    .detail-value {
+      color: #333;
+    }
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #e9ecef;
+    }
+    .tab {
+      padding: 10px 20px;
+      background: none;
+      border: none;
+      color: #666;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-bottom: 3px solid transparent;
+    }
+    .tab.active {
+      color: #667eea;
+      border-bottom-color: #667eea;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* Video Creation Wizard */
+    .wizard-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    .wizard-modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .wizard-container {
+      background: white;
+      border-radius: 15px;
+      padding: 40px;
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+    }
+    .wizard-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .wizard-header h2 {
+      color: #667eea;
+      margin-bottom: 10px;
+    }
+    .wizard-steps {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    .wizard-steps::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #e9ecef;
+      z-index: 0;
+    }
+    .wizard-step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .wizard-step-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #e9ecef;
+      color: #999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      font-weight: bold;
+    }
+    .wizard-step.active .wizard-step-circle {
+      background: #667eea;
+      color: white;
+    }
+    .wizard-step.completed .wizard-step-circle {
+      background: #28a745;
+      color: white;
+    }
+    .wizard-step-label {
+      font-size: 0.85em;
+      color: #666;
+    }
+    .wizard-content {
+      min-height: 300px;
+    }
+    .wizard-step-content {
+      display: none;
+    }
+    .wizard-step-content.active {
+      display: block;
+    }
+    .wizard-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+      gap: 10px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1em;
+      margin-top: 10px;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    textarea.form-input {
+      min-height: 150px;
+      font-family: inherit;
+      resize: vertical;
+    }
+    .preview-box {
+      background: #000;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 15px;
+      color: white;
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .subtitle-overlay {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      padding: 15px 25px;
+      border-radius: 8px;
+      text-align: center;
+      max-width: 80%;
+      font-size: 1.2em;
+      line-height: 1.5;
+    }
   </style>
 </head>
 <body>
+  <!-- Video Creation Wizard Modal -->
+  <div id="wizardModal" class="wizard-modal">
+    <div class="wizard-container">
+      <div class="wizard-header">
+        <h2>🎬 Yeni Video Oluştur</h2>
+        <button onclick="closeWizard()" style="position: absolute; top: 20px; right: 20px; background: #dc3545;">✕ Kapat</button>
+      </div>
+      
+      <div class="wizard-steps">
+        <div class="wizard-step active" data-step="1">
+          <div class="wizard-step-circle">1</div>
+          <div class="wizard-step-label">Script</div>
+        </div>
+        <div class="wizard-step" data-step="2">
+          <div class="wizard-step-circle">2</div>
+          <div class="wizard-step-label">Seslendirme</div>
+        </div>
+        <div class="wizard-step" data-step="3">
+          <div class="wizard-step-circle">3</div>
+          <div class="wizard-step-label">Altyazı</div>
+        </div>
+        <div class="wizard-step" data-step="4">
+          <div class="wizard-step-circle">4</div>
+          <div class="wizard-step-label">Preview & Video</div>
+        </div>
+        <div class="wizard-step" data-step="5">
+          <div class="wizard-step-circle">5</div>
+          <div class="wizard-step-label">Final</div>
+        </div>
+      </div>
+      
+      <div class="wizard-content">
+        <!-- Step 1: Script -->
+        <div id="step1" class="wizard-step-content active">
+          <h3 style="color: #667eea; margin-bottom: 15px;">📝 Script Hazırlama</h3>
+          <p style="color: #666; margin-bottom: 20px;">Kendi scriptinizi yazın veya bir konu girin (OpenAI oluştursun)</p>
+          
+          <label style="font-weight: 600; color: #333; display: block; margin-bottom: 10px;">
+            <input type="radio" name="scriptOption" value="custom" checked onchange="toggleScriptInput()"> Kendi Scriptimi Yazacağım
+          </label>
+          <label style="font-weight: 600; color: #333; display: block; margin-bottom: 20px;">
+            <input type="radio" name="scriptOption" value="generate" onchange="toggleScriptInput()"> OpenAI Oluştursun
+          </label>
+          
+          <div id="customScriptInput">
+            <label style="font-weight: 600; color: #333;">Script Metni:</label>
+            <textarea id="scriptText" class="form-input" placeholder="Scriptinizi buraya yazın... (50-75 kelime, 20-30 saniye için ideal)"></textarea>
+          </div>
+          
+          <div id="generateScriptInput" style="display: none;">
+            <label style="font-weight: 600; color: #333;">Konu / Topic:</label>
+            <input type="text" id="topicText" class="form-input" placeholder="Örn: Osmanlı İmparatorluğu'nun kuruluşu, Kuantum fiziği temelleri...">
+          </div>
+        </div>
+        
+        <!-- Step 2: Audio -->
+        <div id="step2" class="wizard-step-content">
+          <h3 style="color: #667eea; margin-bottom: 15px;">🎤 Seslendirme</h3>
+          <div id="audioGenerating" style="display: none;">
+            <p style="text-align: center; color: #667eea; padding: 40px;">
+              ⏳ Ses dosyası oluşturuluyor...<br>
+              <small>Bu işlem 10-30 saniye sürebilir</small>
+            </p>
+          </div>
+          <div id="audioReady" style="display: none;">
+            <p style="color: #28a745; margin-bottom: 15px;">✓ Ses dosyası hazır!</p>
+            <audio id="previewAudio" controls style="width: 100%;"></audio>
+          </div>
+        </div>
+        
+        <!-- Step 3: Subtitles -->
+        <div id="step3" class="wizard-step-content">
+          <h3 style="color: #667eea; margin-bottom: 15px;">📝 Altyazı Hazırlama</h3>
+          <div id="subtitleGenerating" style="display: none;">
+            <p style="text-align: center; color: #667eea; padding: 40px;">
+              ⏳ Altyazılar oluşturuluyor...
+            </p>
+          </div>
+          <div id="subtitleReady" style="display: none;">
+            <p style="color: #28a745; margin-bottom: 15px;">✓ Altyazılar hazır!</p>
+            <div id="subtitlePreview" style="background: #f8f9fa; padding: 15px; border-radius: 8px; max-height: 300px; overflow-y: auto;"></div>
+          </div>
+        </div>
+        
+        <!-- Step 4: Preview & Video Selection -->
+        <div id="step4" class="wizard-step-content">
+          <h3 style="color: #667eea; margin-bottom: 15px;">🎬 Preview & Video Seçimi</h3>
+          <p style="color: #666; margin-bottom: 15px;">Altyazı ve sesli preview'ı izleyin</p>
+          
+          <div class="preview-box">
+            <video id="blackScreenPreview" style="width: 100%; max-width: 400px; border-radius: 10px;"></video>
+            <div class="subtitle-overlay" id="previewSubtitle">Altyazı buraya gelecek...</div>
+          </div>
+          
+          <!-- Video Mode Selection -->
+          <div style="margin-top: 20px; background: #f8f9fa; padding: 20px; border-radius: 10px;">
+            <h4 style="color: #667eea; margin-bottom: 15px;">📹 Video Nasıl Oluşturulsun?</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+              <label style="padding: 15px; background: white; border: 3px solid #667eea; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                <input type="radio" name="videoMode" value="manual" checked onchange="toggleVideoMode()">
+                <div>
+                  <strong style="color: #667eea;">📤 Manuel Yükle</strong>
+                  <p style="margin: 5px 0 0 0; font-size: 0.85em; color: #666;">Kendi videolarını yükle</p>
+                </div>
+              </label>
+              <label style="padding: 15px; background: white; border: 3px solid #764ba2; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                <input type="radio" name="videoMode" value="auto" onchange="toggleVideoMode()">
+                <div>
+                  <strong style="color: #764ba2;">✨ Otomatik Oluştur</strong>
+                  <p style="margin: 5px 0 0 0; font-size: 0.85em; color: #666;">Stock videolardan otomatik</p>
+                </div>
+              </label>
+              <label style="padding: 15px; background: white; border: 3px solid #f08e4a; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                <input type="radio" name="videoMode" value="pexels" onchange="toggleVideoMode()">
+                <div>
+                  <strong style="color: #f08e4a;">📸 Pexels'den Oluştur</strong>
+                  <p style="margin: 5px 0 0 0; font-size: 0.85em; color: #666;">Script'e göre otomatik indir</p>
+                </div>
+              </label>
+            </div>
+          </div>
+          
+          <!-- Manual Upload Section -->
+          <div id="manualUploadSection" style="margin-top: 20px; background: #fff3cd; padding: 15px; border-radius: 8px;">
+            <strong style="color: #856404;">💡 Video Yükleme:</strong>
+            <p style="color: #856404; margin-top: 5px;">Preview'ı izledikten sonra arka plan videolarınızı yükleyin. <strong>Birden fazla video seçebilirsiniz</strong> - otomatik olarak kesitler alınıp birleştirilecek! 🎬</p>
+            <input type="file" id="finalVideoUpload" accept="video/mp4,video/mov,video/webm" class="form-input" style="margin-top: 10px;" multiple>
+            <div id="uploadedVideosList" style="margin-top: 10px; font-size: 14px; color: #666;"></div>
+          </div>
+          
+          <!-- Auto Generate Section -->
+          <div id="autoGenerateSection" style="margin-top: 20px; background: #e8f5e9; padding: 15px; border-radius: 8px; display: none;">
+            <strong style="color: #2e7d32;">✨ Otomatik Video Oluşturma:</strong>
+            <p style="color: #2e7d32; margin: 10px 0;">Stock videolardan rastgele seçim yapılacak ve script'e uygun şekilde birleştirilecek!</p>
+            <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 10px;">
+              <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">
+                ℹ️ <strong>Nasıl çalışır:</strong>
+              </p>
+              <ul style="color: #666; font-size: 0.9em; margin-left: 20px;">
+                <li>Her subtitle için stock videolardan bir video seçilir</li>
+                <li>Videolar audio uzunluğuna göre kesitler halinde birleştirilir</li>
+                <li>Smooth geçişler ve Türkçe altyazılar eklenir</li>
+              </ul>
+              <p style="color: #2e7d32; margin-top: 10px; font-weight: 600;">
+                📦 ${stockVideoCount || '...'} stock video hazır!
+              </p>
+            </div>
+          </div>
+          
+          <!-- Pexels Generate Section -->
+          <div id="pexelsGenerateSection" style="margin-top: 20px; background: #fff5e6; padding: 15px; border-radius: 8px; display: none;">
+            <strong style="color: #f08e4a;">📸 Pexels API ile Otomatik İndirme:</strong>
+            <p style="color: #f08e4a; margin: 10px 0;">Script'e göre Pexels'den otomatik video indirilip birleştirilecek!</p>
+            <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 10px;">
+              <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">
+                ℹ️ <strong>Nasıl çalışır:</strong>
+              </p>
+              <ul style="color: #666; font-size: 0.9em; margin-left: 20px;">
+                <li>Script'ten otomatik keyword çıkarılır</li>
+                <li>Her subtitle için Pexels'den dikey video indirilir</li>
+                <li>Videolar kesitler halinde birleştirilir</li>
+                <li>Smooth geçişler ve Türkçe altyazılar eklenir</li>
+              </ul>
+              <p style="color: #f08e4a; margin-top: 10px; font-weight: 600;">
+                🔑 PEXELS_API_KEY'i .env dosyasına eklemeyi unutmayın!
+              </p>
+              <p style="color: #666; margin-top: 5px; font-size: 0.85em;">
+                📝 <a href="https://www.pexels.com/api/" target="_blank" style="color: #f08e4a;">Pexels API Key almak için tıklayın</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Step 5: Final -->
+        <div id="step5" class="wizard-step-content">
+          <h3 style="color: #667eea; margin-bottom: 15px;">✅ Final Video</h3>
+          <div id="videoRendering" style="display: none;">
+            <p style="text-align: center; color: #667eea; padding: 40px;">
+              ⏳ Video render ediliyor...<br>
+              <small>Bu işlem 1-3 dakika sürebilir</small>
+            </p>
+          </div>
+          <div id="videoReady" style="display: none;">
+            <p style="color: #28a745; margin-bottom: 15px; font-size: 1.2em;">🎉 Videonuz hazır!</p>
+            <video id="finalVideo" controls style="width: 100%; border-radius: 10px; background: #000;"></video>
+            <div style="margin-top: 20px;">
+              <button onclick="downloadVideo()" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); width: 100%;">
+                ⬇️ Videoyu İndir
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="wizard-actions">
+        <button id="prevBtn" onclick="previousStep()" style="background: #6c757d; display: none;">← Geri</button>
+        <button id="nextBtn" onclick="nextStep()" style="flex: 1;">İleri →</button>
+      </div>
+    </div>
+  </div>
   <div class="container">
     <header>
       <h1>🎬 Shorts Auto Dashboard</h1>
@@ -194,59 +644,63 @@
         <h3>Uploaded</h3>
         <div class="number" id="uploaded">0</div>
       </div>
-      <div class="stat-card">
-        <h3>Scripts</h3>
-        <div class="number" id="scripts">0</div>
-      </div>
-      <div class="stat-card">
-        <h3>Audio Files</h3>
-        <div class="number" id="audio">0</div>
-      </div>
-      <div class="stat-card">
-        <h3>Videos</h3>
-        <div class="number" id="videos">0</div>
-      </div>
     </div>
 
     <div class="actions">
-      <h2>Pipeline Actions</h2>
-      <div class="form-group">
-        <label>Topic Count:</label>
-        <input type="number" id="topicCount" value="1" min="1" max="50">
-      </div>
-      <div class="form-group">
-        <label>Category:</label>
-        <select id="category">
-          <option value="interesting-facts">Interesting Facts</option>
-          <option value="science">Science</option>
-          <option value="history">History</option>
-          <option value="islam-tarihi">İslam Tarihi</option>
-          <option value="dini-icerikler">Dini İçerikler</option>
-          <option value="general">General</option>
-        </select>
-      </div>
-      <div class="action-buttons">
-        <button onclick="runStep('topics')">📝 Generate Topics</button>
-        <button onclick="runStep('scripts')">✍️ Generate Scripts</button>
-        <button onclick="runStep('tts')">🎤 Generate TTS</button>
-        <button onclick="runStep('subtitles')">📝 Sync Subtitles</button>
-        <button onclick="runStep('meta')">📋 Generate Metadata</button>
-        <button onclick="runStep('full')" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">🚀 Run Full Pipeline</button>
-      </div>
+      <h2>Video Oluştur</h2>
+      <button onclick="openWizard()" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); font-size: 1.1em; padding: 20px; margin-bottom: 30px; width: 100%;">
+        🎬 YENİ VIDEO OLUŞTUR
+      </button>
     </div>
 
-    <div class="queue-list">
-      <h2>Recent Queue Items</h2>
-      <div id="queueList" class="loading">Loading...</div>
-    </div>
+    <div class="content-section">
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('videos')">📹 Videolarım</button>
+        <button class="tab" onclick="switchTab('metadata')">📋 Video Bilgileri (Title & Description)</button>
+        <button class="tab" onclick="switchTab('trends')">📈 YouTube Trends</button>
+      </div>
 
-    <div class="queue-list" style="margin-top: 30px;">
-      <h2>📹 Rendered Videos</h2>
-      <div id="videosList" class="loading">Loading...</div>
+      <div id="videosTab" class="tab-content active">
+        <div id="videosList" class="loading">Loading...</div>
+      </div>
+
+      <div id="metadataTab" class="tab-content">
+        <div id="metadataList" class="loading">Loading...</div>
+      </div>
+
+      <div id="trendsTab" class="tab-content">
+        <div style="margin-bottom: 20px; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; color: white;">
+          <h3 style="margin: 0 0 10px 0;">📈 YouTube Shorts Trend'leri</h3>
+          <p style="margin: 0; opacity: 0.9;">En çok izlenen Shorts videolarından ilham alın ve kendi içeriğinizi oluşturun!</p>
+        </div>
+        <div id="trendsList" class="loading">Loading...</div>
+      </div>
     </div>
   </div>
 
   <script>
+    let currentTab = 'videos';
+
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelector(`button[onclick="switchTab('${tab}')"]`).classList.add('active');
+      document.getElementById(`${tab}Tab`).classList.add('active');
+      
+      // Load data for the tab
+      if (tab === 'videos') loadVideos();
+      else if (tab === 'metadata') loadMetadata();
+      else if (tab === 'trends') loadTrends();
+    }
+
+    function toggleDetails(id) {
+      const details = document.getElementById(`details-${id}`);
+      if (details) {
+        details.classList.toggle('show');
+      }
+    }
+
     async function loadStatus() {
       try {
         const res = await fetch('/api/status');
@@ -258,26 +712,606 @@
         document.getElementById('voiced').textContent = data.queue.voiced;
         document.getElementById('rendered').textContent = data.queue.rendered;
         document.getElementById('uploaded').textContent = data.queue.uploaded;
-        document.getElementById('scripts').textContent = data.files.scripts;
-        document.getElementById('audio').textContent = data.files.audio;
-        document.getElementById('videos').textContent = data.files.videos;
+      } catch (error) {
+        console.error('Error loading status:', error);
+      }
+    }
 
+    async function loadQueue() {
+      try {
+        const res = await fetch('/api/queue');
+        const queue = await res.json();
+        
         const queueList = document.getElementById('queueList');
-        if (data.recent.length === 0) {
+        if (queue.length === 0) {
           queueList.innerHTML = '<p style="text-align: center; color: #999;">No items in queue</p>';
         } else {
-          queueList.innerHTML = data.recent.map(item => `
-            <div class="queue-item">
-              <div>
-                <div class="topic">${item.topic}</div>
-                <small style="color: #666;">${new Date(item.createdAt).toLocaleString()}</small>
+          queueList.innerHTML = queue.map(item => `
+            <div class="item-card">
+              <div class="item-header" onclick="toggleDetails('${item.id}')">
+                <div class="item-title">${item.topic}</div>
+                <div>
+                  <span class="status ${item.status}">${item.status}</span>
+                  <button class="expand-btn">▼</button>
+                </div>
               </div>
-              <span class="status ${item.status}">${item.status}</span>
+              <div class="item-meta">
+                ID: ${item.id} • Created: ${new Date(item.createdAt).toLocaleString()} • Priority: ${item.priority}
+              </div>
+              <div class="tags">
+                ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+              </div>
+              <div id="details-${item.id}" class="item-details">
+                <div class="detail-row">
+                  <div class="detail-label">Status:</div>
+                  <div class="detail-value">${item.status}</div>
+                </div>
+                ${item.scriptPath ? `
+                  <div class="detail-row">
+                    <div class="detail-label">Script Path:</div>
+                    <div class="detail-value">${item.scriptPath}</div>
+                  </div>
+                ` : ''}
+                ${item.audioPath ? `
+                  <div class="detail-row">
+                    <div class="detail-label">Audio Path:</div>
+                    <div class="detail-value">${item.audioPath}</div>
+                  </div>
+                ` : ''}
+                ${item.videoPath ? `
+                  <div class="detail-row">
+                    <div class="detail-label">Video Path:</div>
+                    <div class="detail-value">${item.videoPath}</div>
+                  </div>
+                ` : ''}
+              </div>
             </div>
           `).join('');
         }
       } catch (error) {
-        console.error('Error loading status:', error);
+        console.error('Error loading queue:', error);
+      }
+    }
+
+    async function loadScripts() {
+      try {
+        const res = await fetch('/api/scripts');
+        const scripts = await res.json();
+        
+        const scriptsList = document.getElementById('scriptsList');
+        if (scripts.length === 0) {
+          scriptsList.innerHTML = '<p style="text-align: center; color: #999;">No scripts found</p>';
+        } else {
+          scriptsList.innerHTML = scripts.map(item => {
+            const audioFile = `${item.id}.mp3`;
+            const hasAudio = item.data?.audioPath || item.data?.status === 'voiced';
+            return `
+            <div class="item-card" style="border-left: 4px solid ${hasAudio ? '#28a745' : '#667eea'};">
+              <div class="item-header" onclick="toggleDetails('script-${item.id}')">
+                <div class="item-title">
+                  ${hasAudio ? '🎤 ' : ''}${item.data?.topic || item.id}
+                </div>
+                <button class="expand-btn">▼ Preview</button>
+              </div>
+              <div class="item-meta">
+                ID: ${item.id} • Words: ${item.data?.script?.split(' ').length || 0}
+                ${hasAudio ? ' • Audio Ready ✓' : ''}
+              </div>
+              <div id="details-script-${item.id}" class="item-details">
+                <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                  <strong style="color: #856404;">💡 Preview Notları:</strong>
+                  <p style="color: #856404; margin-top: 5px; line-height: 1.6;">
+                    Bu script ve audio'yu dinleyerek hangi tür görsel içeriğe ihtiyaç olduğunu anlayabilirsiniz. 
+                    Ardından <strong>Stock Videos</strong> sekmesinden uygun video yükleyebilirsiniz.
+                  </p>
+                </div>
+                ${hasAudio ? `
+                  <div style="background: #e7f3ff; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <strong style="color: #004085;">🎧 Audio Preview:</strong>
+                    <audio controls style="width: 100%; margin-top: 10px;">
+                      <source src="/audio/${audioFile}" type="audio/mpeg">
+                      Tarayıcınız audio oynatmayı desteklemiyor.
+                    </audio>
+                  </div>
+                ` : ''}
+                ${item.data?.script ? `
+                  <div style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #e9ecef; margin-bottom: 15px;">
+                    <strong>📝 Script Metni:</strong>
+                    <div class="script-text">${item.data.script}</div>
+                  </div>
+                ` : ''}
+                ${item.data?.bullets ? `
+                  <div style="margin-top: 15px;">
+                    <strong>📌 Bullet Points:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                      ${item.data.bullets.map(b => `<li style="margin-bottom: 5px;">${b}</li>`).join('')}
+                    </ul>
+                  </div>
+                ` : ''}
+                ${item.data?.recommendedVoiceSpeed ? `
+                  <div style="margin-top: 10px;">
+                    <strong>🎙️ Voice Speed:</strong> ${item.data.recommendedVoiceSpeed}
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          `;
+          }).join('');
+        }
+      } catch (error) {
+        console.error('Error loading scripts:', error);
+      }
+    }
+
+    async function loadAudio() {
+      try {
+        const res = await fetch('/api/audio');
+        const audioFiles = await res.json();
+        
+        const audioList = document.getElementById('audioList');
+        if (audioFiles.length === 0) {
+          audioList.innerHTML = '<p style="text-align: center; color: #999;">No audio files found</p>';
+        } else {
+          audioList.innerHTML = audioFiles.map(item => `
+            <div class="item-card">
+              <div class="item-header" onclick="toggleDetails('audio-${item.id}')">
+                <div class="item-title">${item.id}</div>
+                <button class="expand-btn">▼</button>
+              </div>
+              <div class="item-meta">
+                Size: ${(item.size / 1024).toFixed(2)} KB • Duration: ${item.metadata?.duration || 'N/A'}s
+              </div>
+              <div id="details-audio-${item.id}" class="item-details">
+                <audio controls>
+                  <source src="${item.url}" type="audio/mpeg">
+                  Your browser does not support audio playback.
+                </audio>
+                ${item.metadata?.voiceSettings ? `
+                  <div style="margin-top: 15px;">
+                    <strong>Voice Settings:</strong>
+                    <pre style="background: #f8f9fa; padding: 10px; border-radius: 5px; margin-top: 5px;">${JSON.stringify(item.metadata.voiceSettings, null, 2)}</pre>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          `).join('');
+        }
+      } catch (error) {
+        console.error('Error loading audio:', error);
+      }
+    }
+
+    async function loadMetadata() {
+      try {
+        const res = await fetch('/api/metadata');
+        const metadata = await res.json();
+        
+        const metadataList = document.getElementById('metadataList');
+        if (metadata.length === 0) {
+          metadataList.innerHTML = '<p style="text-align: center; color: #999;">Henüz metadata oluşturulmamış</p>';
+        } else {
+          metadataList.innerHTML = metadata.map(meta => `
+            <div class="item-card">
+              <div class="item-header" onclick="toggleDetails('meta-${meta.id}')">
+                <div class="item-title">📹 ${meta.videoId}</div>
+                <button class="expand-btn">▼</button>
+              </div>
+              <div class="item-meta">
+                ${meta.videoExists ? '✅ Video mevcut' : '❌ Video bulunamadı'} • ${new Date(meta.createdAt).toLocaleString('tr-TR')}
+              </div>
+              <div id="details-meta-${meta.id}" class="item-details">
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 15px;">
+                  <h4 style="color: #667eea; margin-bottom: 10px;">📝 YouTube Shorts İçin Title</h4>
+                  <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea; font-family: monospace; word-wrap: break-word;">
+                    ${meta.title}
+                  </div>
+                  <button onclick="navigator.clipboard.writeText('${meta.title.replace(/'/g, "\\'")}'); alert('Title kopyalandı!')" style="margin-top: 10px; background: #667eea; padding: 8px 15px; border-radius: 5px; font-size: 0.9em;">
+                    📋 Title'ı Kopyala
+                  </button>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 15px;">
+                  <h4 style="color: #764ba2; margin-bottom: 10px;">📄 YouTube Shorts İçin Description</h4>
+                  <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #764ba2; font-family: monospace; white-space: pre-wrap; word-wrap: break-word; max-height: 300px; overflow-y: auto;">
+                    ${meta.description}
+                  </div>
+                  <button onclick="navigator.clipboard.writeText(\`${meta.description.replace(/`/g, "\\`").replace(/\$/g, "\\$")}\`); alert('Description kopyalandı!')" style="margin-top: 10px; background: #764ba2; padding: 8px 15px; border-radius: 5px; font-size: 0.9em;">
+                    📋 Description'ı Kopyala
+                  </button>
+                </div>
+                
+                ${meta.tags.length > 0 ? `
+                  <div style="background: #e8f5e9; padding: 15px; border-radius: 10px;">
+                    <h4 style="color: #2e7d32; margin-bottom: 10px;">🏷️ Tags</h4>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                      ${meta.tags.map(tag => `<span style="background: #4caf50; color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.85em;">${tag}</span>`).join('')}
+                    </div>
+                  </div>
+                ` : ''}
+                
+                ${meta.videoExists ? `
+                  <div style="margin-top: 15px; padding: 15px; background: #fff3cd; border-radius: 10px;">
+                    <p style="color: #856404; margin-bottom: 10px;">
+                      ℹ️ <strong>Shorts Yüklerken:</strong>
+                    </p>
+                    <ul style="color: #856404; margin-left: 20px;">
+                      <li>Yukarıdaki Title ve Description'ı kopyalayıp YouTube'a yapıştırın</li>
+                      <li>Video boyutu: 1080x1920 (9:16 oran) ✅</li>
+                      <li>Video süresi: 20-30 saniye ✅</li>
+                      <li>Hashtag'ler description'da mevcut</li>
+                    </ul>
+                    <a href="${meta.videoUrl}" download="${meta.videoId}.mp4" style="display: inline-block; margin-top: 10px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                      ⬇️ Videoyu İndir
+                    </a>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          `).join('');
+        }
+      } catch (error) {
+        document.getElementById('metadataList').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+      }
+    }
+
+    // Load YouTube Categories
+    let youtubeCategories = [];
+    let selectedCategoryId = 'all'; // Track selected category
+    
+    async function loadYouTubeCategories() {
+      try {
+        const res = await fetch('/api/youtube-categories?region=TR');
+        const data = await res.json();
+        if (data.success && data.categories) {
+          youtubeCategories = data.categories;
+          console.log('📂 YouTube Categories loaded for TR:', youtubeCategories.length);
+        }
+      } catch (error) {
+        console.error('Error loading categories:', error);
+      }
+    }
+
+    async function loadTrends(categoryId = 'all', region = 'TR') {
+      try {
+        selectedCategoryId = categoryId;
+        
+        // Always include region parameter
+        const params = new URLSearchParams({ region });
+        if (categoryId !== 'all') {
+          params.append('categoryId', categoryId);
+        }
+        
+        const url = `/api/youtube-trends?${params.toString()}`;
+        
+        const res = await fetch(url);
+        const data = await res.json();
+        
+        const trendsList = document.getElementById('trendsList');
+        
+        if (data.error) {
+          trendsList.innerHTML = `
+            <div style="text-align: center; padding: 40px;">
+              <h3 style="color: #f08e4a;">⚠️ ${data.error}</h3>
+              <p style="color: #666; margin: 20px 0;">${data.message || 'YouTube API key yapılandırılmamış'}</p>
+              <div style="background: #fff3cd; padding: 20px; border-radius: 10px; text-align: left; max-width: 600px; margin: 0 auto;">
+                <h4 style="color: #856404; margin-bottom: 10px;">🔑 API Key Nasıl Alınır?</h4>
+                <ol style="color: #856404; line-height: 1.8;">
+                  <li>Google Cloud Console'a git: <a href="https://console.cloud.google.com" target="_blank" style="color: #667eea;">console.cloud.google.com</a></li>
+                  <li>Yeni proje oluştur veya mevcut projeyi seç</li>
+                  <li>"APIs & Services" → "Library" → "YouTube Data API v3" ara ve aktif et</li>
+                  <li>"Credentials" → "Create Credentials" → "API Key"</li>
+                  <li>.env dosyasına ekle: <code style="background: #f8f9fa; padding: 2px 6px;">YOUTUBE_API_KEY=your_key_here</code></li>
+                  <li>Serveri yeniden başlat: <code style="background: #f8f9fa; padding: 2px 6px;">npm run dev</code></li>
+                </ol>
+                <p style="margin-top: 15px;"><strong>Ücretsiz!</strong> Günde 10,000 quota (yaklaşık 100 trend çağrısı)</p>
+              </div>
+            </div>
+          `;
+          return;
+        }
+        
+        if (data.trends.length === 0) {
+          trendsList.innerHTML = '<p style="text-align: center; color: #999;">Şu an trend Shorts bulunamadı</p>';
+          return;
+        }
+        
+        // Get selected category name
+        const selectedCategory = youtubeCategories.find(c => c.id === data.categoryId);
+        const categoryName = data.categoryId === 'all' ? 'Tüm Kategoriler' : (selectedCategory?.title || 'Bilinmeyen Kategori');
+        
+        trendsList.innerHTML = `
+          <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div style="flex: 1;">
+              <span style="color: #667eea; font-weight: 600;">📍 Bölge: ${data.region}</span>
+              <span style="color: #999; margin-left: 15px;">• ${data.count} Shorts</span>
+              <span style="color: #999; margin-left: 15px;">• ${new Date(data.lastUpdated).toLocaleTimeString('tr-TR')}</span>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              ${youtubeCategories.length > 0 ? `
+                <button onclick="showCategoriesSelector()" style="background: #667eea; padding: 8px 15px; border-radius: 5px; font-size: 0.9em;">
+                  📂 Kategori Seç
+                </button>
+              ` : ''}
+              <button onclick="loadTrends('${data.categoryId}', 'TR')" style="background: #764ba2; padding: 8px 15px; border-radius: 5px; font-size: 0.9em;">
+                🔄 Yenile
+              </button>
+            </div>
+          </div>
+          
+          <div style="margin-bottom: 15px; padding: 12px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); border-radius: 8px; border-left: 4px solid #667eea;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <strong style="color: #667eea;">📂 Seçili Kategori:</strong> 
+                <span style="color: #333; font-weight: 600;">${categoryName}</span>
+              </div>
+              ${data.categoryId !== 'all' ? `
+                <button onclick="loadTrends('all', 'TR')" style="background: #f44336; color: white; border: none; padding: 5px 12px; border-radius: 5px; font-size: 0.85em; cursor: pointer;">
+                  ✕ Filtreyi Temizle
+                </button>
+              ` : ''}
+            </div>
+            <p style="margin: 10px 0 0 0; color: #667eea; font-size: 0.85em; opacity: 0.9;">
+              💡 YouTube Shorts, 60 saniyeden kısa dikey videolardır. Bu listede seçili kategoriden ${data.categoryId === 'all' ? 'tüm kategorilerden' : 'sadece'} ≤60 saniye videolar gösterilir.
+            </p>
+          </div>
+          
+          ${data.trends.map((trend, index) => `
+            <div class="item-card" style="border-left: 4px solid ${index < 3 ? '#f44336' : '#667eea'}; position: relative;">
+              <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <div style="flex-shrink: 0; position: relative;">
+                  <img src="${trend.thumbnail}" alt="${trend.title}" style="width: 120px; height: 120px; object-fit: cover; border-radius: 10px;">
+                  ${index < 3 ? `<div style="position: absolute; top: 5px; left: 5px; background: #f44336; color: white; padding: 5px 10px; border-radius: 5px; font-weight: bold; font-size: 0.85em;">🔥 TOP ${index + 1}</div>` : ''}
+                </div>
+                <div style="flex: 1; min-width: 300px;">
+                  <h3 style="color: #333; margin: 0 0 10px 0; font-size: 1.1em;">
+                    <a href="${trend.url}" target="_blank" style="color: #667eea; text-decoration: none; hover: text-decoration: underline;">
+                      ${trend.title}
+                    </a>
+                  </h3>
+                  <div style="color: #999; font-size: 0.9em; margin-bottom: 10px;">
+                    ${trend.channelTitle} • ${trend.duration}s • ${new Date(trend.publishedAt).toLocaleDateString('tr-TR')}
+                  </div>
+                  <div style="display: flex; gap: 20px; margin-bottom: 10px;">
+                    <span style="color: #666;">👁️ ${(trend.views / 1000000).toFixed(1)}M</span>
+                    <span style="color: #666;">👍 ${(trend.likes / 1000).toFixed(1)}K</span>
+                  </div>
+                  
+                  ${trend.keywords.length > 0 ? `
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px;">
+                      ${trend.keywords.slice(0, 8).map(keyword => `<span style="background: #e8f5e9; color: #2e7d32; padding: 4px 10px; border-radius: 12px; font-size: 0.85em;">#${keyword}</span>`).join('')}
+                    </div>
+                  ` : ''}
+                  
+                  <button onclick="createVideoFromTrend(\`${trend.title.replace(/`/g, '\\`')}\`, \`${trend.keywords.join(", ").replace(/`/g, '\\`')}\`)" 
+                          style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                    🎬 Bu Trende Göre Video Oluştur
+                  </button>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        `;
+        
+      } catch (error) {
+        console.error('Error loading trends:', error);
+        document.getElementById('trendsList').innerHTML = `
+          <div style="text-align: center; padding: 40px; color: #f44336;">
+            <h3>❌ Hata</h3>
+            <p>${error.message}</p>
+          </div>
+        `;
+      }
+    }
+
+    function createVideoFromTrend(title, keywords) {
+      // Parse keywords into array
+      const keywordArray = keywords.split(',').map(k => k.trim()).filter(k => k.length > 0);
+      const keywordsText = keywordArray.slice(0, 5).join(', ');
+      
+      // Create a rich prompt with keywords
+      const trendPrompt = `"${title}" konusunda viral olabilecek Türkçe bir YouTube Shorts scripti yaz.
+
+🔥 Trend Keywords: ${keywordsText}
+
+Bu konuyu ilginç ve dikkat çekici şekilde anlat. Viral içerik formatında yaz.`;
+      
+      // Store keywords and trend info for later use
+      wizardState.trendKeywords = keywordArray;
+      wizardState.trendTitle = title;
+      
+      // Start at step 1
+      wizardState.currentStep = 1;
+      wizardState.scriptText = '';
+      
+      // Open wizard modal
+      document.getElementById('wizardModal').style.display = 'block';
+      
+      // Update UI to render step 1
+      updateWizardUI();
+      
+      // Now safely access and fill the topic input after UI is updated
+      setTimeout(() => {
+        const topicInput = document.getElementById('topicText'); // Correct ID!
+        if (topicInput) {
+          topicInput.value = trendPrompt;
+          // Also select the "generate" radio button
+          const generateRadio = document.querySelector('input[name="scriptOption"][value="generate"]');
+          if (generateRadio) {
+            generateRadio.checked = true;
+            toggleScriptInput(); // Show the topic input field
+          }
+        }
+      }, 100);
+      
+      // Show info message
+      const infoDiv = document.createElement('div');
+      infoDiv.style.cssText = 'position: fixed; top: 20px; right: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 10001; max-width: 400px;';
+      infoDiv.innerHTML = `
+        <h3 style="margin: 0 0 10px 0;">🎬 Trend Aktarıldı!</h3>
+        <p style="margin: 0 0 10px 0; line-height: 1.6;">
+          <strong>Başlık:</strong> ${title.substring(0, 50)}...<br>
+          <strong>Keywords:</strong> ${keywordsText}
+        </p>
+        <p style="margin: 0; font-size: 0.9em; opacity: 0.9;">
+          💡 <strong>İpucu:</strong> "Pexels'den Oluştur" modunu seçerseniz, bu keywords'lerle otomatik video bulunacak!
+        </p>
+      `;
+      document.body.appendChild(infoDiv);
+      
+      setTimeout(() => {
+        infoDiv.style.transition = 'opacity 0.5s';
+        infoDiv.style.opacity = '0';
+        setTimeout(() => document.body.removeChild(infoDiv), 500);
+      }, 5000);
+    }
+
+    async function loadVideos() {
+      try {
+        const res = await fetch('/api/videos');
+        const videos = await res.json();
+        
+        const videosList = document.getElementById('videosList');
+        if (videos.length === 0) {
+          videosList.innerHTML = '<p style="text-align: center; color: #999;">No videos found</p>';
+        } else {
+          videosList.innerHTML = videos.map(video => {
+            const sizeMB = (video.size / (1024 * 1024)).toFixed(2);
+            const status = video.metadata?.status || 'unknown';
+            return `
+              <div class="item-card">
+                <div class="item-header" onclick="toggleDetails('video-${video.id}')">
+                  <div class="item-title">${video.id}</div>
+                  <div>
+                    <span class="status ${status}">${status}</span>
+                    <button class="expand-btn">▼</button>
+                  </div>
+                </div>
+                <div class="item-meta">
+                  Size: ${sizeMB} MB • ${video.filename}
+                </div>
+                <div id="details-video-${video.id}" class="item-details">
+                  <video controls>
+                    <source src="${video.url}" type="video/mp4">
+                    Your browser does not support video playback.
+                  </video>
+                  <div style="margin-top: 15px;">
+                    <a href="${video.url}" download="${video.filename}" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">
+                      ⬇️ Download Video
+                    </a>
+                  </div>
+                  ${video.metadata ? `
+                    <div style="margin-top: 15px;">
+                      <strong>Metadata:</strong>
+                      <pre style="background: #f8f9fa; padding: 10px; border-radius: 5px; margin-top: 5px;">${JSON.stringify(video.metadata, null, 2)}</pre>
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      } catch (error) {
+        console.error('Error loading videos:', error);
+      }
+    }
+
+    async function loadStockVideos() {
+      try {
+        const res = await fetch('/api/assets');
+        const assets = await res.json();
+        
+        const stockList = document.getElementById('stockList');
+        if (assets.length === 0) {
+          stockList.innerHTML = '<p style="text-align: center; color: #999;">Henüz stock video yüklenmemiş</p>';
+        } else {
+          stockList.innerHTML = assets.map(asset => {
+            const sizeMB = (asset.size / (1024 * 1024)).toFixed(2);
+            return `
+              <div class="item-card">
+                <div class="item-header">
+                  <div class="item-title">📹 ${asset.filename}</div>
+                  <button onclick="deleteStockVideo('${asset.filename}')" style="background: #dc3545; padding: 8px 15px; font-size: 0.9em;">
+                    🗑️ Sil
+                  </button>
+                </div>
+                <div class="item-meta">
+                  Size: ${sizeMB} MB • Uploaded: ${new Date(asset.uploadedAt).toLocaleString()}
+                </div>
+                <div style="margin-top: 15px;">
+                  <video controls style="width: 100%; max-width: 600px; border-radius: 8px; background: #000;">
+                    <source src="${asset.url}" type="video/mp4">
+                    Tarayıcınız video oynatmayı desteklemiyor.
+                  </video>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      } catch (error) {
+        console.error('Error loading stock videos:', error);
+      }
+    }
+
+    async function uploadStockVideo() {
+      const input = document.getElementById('stockVideoInput');
+      const file = input.files[0];
+      
+      if (!file) {
+        alert('Lütfen bir video dosyası seçin');
+        return;
+      }
+      
+      if (file.size > 100 * 1024 * 1024) {
+        alert('Video dosyası çok büyük (max 100MB)');
+        return;
+      }
+      
+      try {
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          const res = await fetch('/api/upload-stock-video', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              filename: file.name,
+              data: e.target.result
+            })
+          });
+          
+          if (res.ok) {
+            alert('Video başarıyla yüklendi!');
+            input.value = '';
+            loadStockVideos();
+          } else {
+            const error = await res.json();
+            alert(`Hata: ${error.error}`);
+          }
+        };
+        reader.readAsDataURL(file);
+      } catch (error) {
+        alert(`Hata: ${error.message}`);
+      }
+    }
+
+    async function deleteStockVideo(filename) {
+      if (!confirm(`${filename} dosyasını silmek istediğinize emin misiniz?`)) {
+        return;
+      }
+      
+      try {
+        const res = await fetch(`/api/assets/${filename}`, {
+          method: 'DELETE'
+        });
+        
+        if (res.ok) {
+          alert('Video silindi');
+          loadStockVideos();
+        } else {
+          const error = await res.json();
+          alert(`Hata: ${error.error}`);
+        }
+      } catch (error) {
+        alert(`Hata: ${error.message}`);
       }
     }
 
@@ -294,7 +1328,11 @@
         
         if (res.ok) {
           alert(`${step} started! Check console for progress.`);
-          setTimeout(loadStatus, 2000);
+          setTimeout(() => {
+            loadStatus();
+            if (currentTab === 'videos') loadVideos();
+            else if (currentTab === 'metadata') loadMetadata();
+          }, 2000);
         } else {
           const error = await res.json();
           alert(`Error: ${error.error}`);
@@ -304,52 +1342,528 @@
       }
     }
 
-    async function loadVideos() {
-      try {
-        const res = await fetch('/api/videos');
-        const videos = await res.json();
-        
-        const videosList = document.getElementById('videosList');
-        if (videos.length === 0) {
-          videosList.innerHTML = '<p style="text-align: center; color: #999;">Henüz render edilmiş video yok</p>';
-        } else {
-          videosList.innerHTML = videos.map(video => {
-            const sizeMB = (video.size / (1024 * 1024)).toFixed(2);
-            const status = video.metadata?.status || 'unknown';
-            return `
-              <div class="queue-item" style="flex-direction: column; align-items: flex-start;">
-                <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; margin-bottom: 10px;">
-                  <div>
-                    <div class="topic">${video.id}</div>
-                    <small style="color: #666;">${sizeMB} MB • ${status}</small>
-                  </div>
-                  <a href="${video.url}" download="${video.filename}" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);">
-                    ⬇️ İndir
-                  </a>
-                </div>
-                <div style="width: 100%;">
-                  <video controls style="width: 100%; max-width: 500px; border-radius: 8px; background: #000;">
-                    <source src="${video.url}" type="video/mp4">
-                    Tarayıcınız video oynatmayı desteklemiyor.
-                  </video>
-                </div>
-              </div>
-            `;
-          }).join('');
-        }
-      } catch (error) {
-        console.error('Error loading videos:', error);
+    // Check if any media is playing
+    function isMediaPlaying() {
+      const audios = document.querySelectorAll('audio');
+      const videos = document.querySelectorAll('video');
+      
+      for (let audio of audios) {
+        if (!audio.paused) return true;
+      }
+      for (let video of videos) {
+        if (!video.paused) return true;
+      }
+      return false;
+    }
+
+    // Wizard State
+    let wizardState = {
+      currentStep: 1,
+      scriptText: '',
+      scriptId: '',
+      audioPath: '',
+      subtitles: [],
+      videoFile: null,
+      videoFiles: [],
+      videoMode: 'manual', // 'manual' or 'auto' or 'pexels'
+      finalVideoId: '',
+      stockVideoCount: 0,
+      trendKeywords: [], // Keywords from YouTube trends
+      trendTitle: '' // Title from YouTube trends
+    };
+
+    function openWizard() {
+      document.getElementById('wizardModal').classList.add('active');
+      resetWizard();
+    }
+
+    function closeWizard() {
+      document.getElementById('wizardModal').classList.remove('active');
+      resetWizard();
+    }
+
+    function resetWizard() {
+      wizardState = {
+        currentStep: 1,
+        scriptText: '',
+        scriptId: '',
+        audioPath: '',
+        subtitles: [],
+        videoFile: null,
+        videoFiles: [],
+        videoMode: 'manual',
+        finalVideoId: '',
+        stockVideoCount: 0,
+        trendKeywords: [],
+        trendTitle: ''
+      };
+      
+      // Reset UI
+      document.querySelectorAll('.wizard-step').forEach(step => {
+        step.classList.remove('active', 'completed');
+      });
+      document.querySelectorAll('.wizard-step-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      
+      document.querySelector('.wizard-step[data-step="1"]').classList.add('active');
+      document.getElementById('step1').classList.add('active');
+      document.getElementById('prevBtn').style.display = 'none';
+      document.getElementById('nextBtn').textContent = 'İleri →';
+      
+      // Reset inputs
+      document.getElementById('scriptText').value = '';
+      document.getElementById('topicText').value = '';
+      document.querySelector('input[name="scriptOption"][value="custom"]').checked = true;
+      toggleScriptInput();
+    }
+
+    function toggleScriptInput() {
+      const option = document.querySelector('input[name="scriptOption"]:checked').value;
+      document.getElementById('customScriptInput').style.display = option === 'custom' ? 'block' : 'none';
+      document.getElementById('generateScriptInput').style.display = option === 'generate' ? 'block' : 'none';
+    }
+
+    async function nextStep() {
+      const step = wizardState.currentStep;
+      
+      // Validate and process current step
+      if (step === 1) {
+        if (!await processStep1()) return;
+      } else if (step === 2) {
+        if (!await processStep2()) return;
+      } else if (step === 3) {
+        if (!await processStep3()) return;
+        // Auto-trigger step 4 (preview)
+        wizardState.currentStep++;
+        updateWizardUI();
+        await loadPreview();
+        return;
+      } else if (step === 4) {
+        if (!await processStep4()) return;
+        // Auto-trigger step 5 (final render)
+        wizardState.currentStep++;
+        updateWizardUI();
+        await processStep5();
+        return;
+      } else if (step === 5) {
+        closeWizard();
+        return;
+      }
+      
+      // Move to next step
+      wizardState.currentStep++;
+      updateWizardUI();
+    }
+
+    function previousStep() {
+      if (wizardState.currentStep > 1) {
+        wizardState.currentStep--;
+        updateWizardUI();
       }
     }
 
-    // Load status on page load and refresh every 5 seconds
+    function updateWizardUI() {
+      const step = wizardState.currentStep;
+      
+      // Update step indicators
+      document.querySelectorAll('.wizard-step').forEach((el, idx) => {
+        el.classList.remove('active');
+        if (idx + 1 < step) {
+          el.classList.add('completed');
+        } else if (idx + 1 === step) {
+          el.classList.add('active');
+        } else {
+          el.classList.remove('completed');
+        }
+      });
+      
+      // Update content
+      document.querySelectorAll('.wizard-step-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      document.getElementById(`step${step}`).classList.add('active');
+      
+      // Update buttons
+      document.getElementById('prevBtn').style.display = step > 1 ? 'block' : 'none';
+      document.getElementById('nextBtn').textContent = step === 5 ? 'Kapat' : 'İleri →';
+    }
+
+    async function processStep1() {
+      const option = document.querySelector('input[name="scriptOption"]:checked').value;
+      
+      if (option === 'custom') {
+        const text = document.getElementById('scriptText').value.trim();
+        if (!text) {
+          alert('Lütfen script metnini girin');
+          return false;
+        }
+        wizardState.scriptText = text;
+        wizardState.scriptId = 'custom-' + Date.now();
+      } else {
+        const topic = document.getElementById('topicText').value.trim();
+        if (!topic) {
+          alert('Lütfen bir konu girin');
+          return false;
+        }
+        
+        // Generate script via OpenAI
+        try {
+          const res = await fetch('/api/wizard/generate-script', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ topic })
+          });
+          
+          if (!res.ok) throw new Error('Script oluşturulamadı');
+          
+          const data = await res.json();
+          wizardState.scriptText = data.script;
+          wizardState.scriptId = data.id;
+        } catch (error) {
+          alert('Script oluşturulurken hata: ' + error.message);
+          return false;
+        }
+      }
+      
+      return true;
+    }
+
+    async function processStep2() {
+      // Show loading
+      document.getElementById('audioGenerating').style.display = 'block';
+      document.getElementById('audioReady').style.display = 'none';
+      
+      try {
+        const res = await fetch('/api/wizard/generate-audio', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            scriptId: wizardState.scriptId,
+            scriptText: wizardState.scriptText
+          })
+        });
+        
+        if (!res.ok) throw new Error('Audio oluşturulamadı');
+        
+        const data = await res.json();
+        wizardState.audioPath = data.audioPath;
+        
+        // Show audio player
+        document.getElementById('audioGenerating').style.display = 'none';
+        document.getElementById('audioReady').style.display = 'block';
+        document.getElementById('previewAudio').src = data.audioUrl;
+        
+        return true;
+      } catch (error) {
+        alert('Audio oluşturulurken hata: ' + error.message);
+        document.getElementById('audioGenerating').style.display = 'none';
+        return false;
+      }
+    }
+
+    async function processStep3() {
+      // Show loading
+      document.getElementById('subtitleGenerating').style.display = 'block';
+      document.getElementById('subtitleReady').style.display = 'none';
+      
+      try {
+        const res = await fetch('/api/wizard/generate-subtitles', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            scriptId: wizardState.scriptId,
+            audioPath: wizardState.audioPath,
+            scriptText: wizardState.scriptText
+          })
+        });
+        
+        if (!res.ok) throw new Error('Altyazılar oluşturulamadı');
+        
+        const data = await res.json();
+        wizardState.subtitles = data.subtitles;
+        
+        // Show subtitles
+        document.getElementById('subtitleGenerating').style.display = 'none';
+        document.getElementById('subtitleReady').style.display = 'block';
+        document.getElementById('subtitlePreview').innerHTML = data.subtitles.map(sub => 
+          `<div style="margin-bottom: 10px;">
+            <strong>${sub.start}s - ${sub.end}s:</strong> ${sub.text}
+          </div>`
+        ).join('');
+        
+        return true;
+      } catch (error) {
+        alert('Altyazı oluşturulurken hata: ' + error.message);
+        document.getElementById('subtitleGenerating').style.display = 'none';
+        return false;
+      }
+    }
+
+    async function loadPreview() {
+      // Create black screen video with subtitles preview
+      // For now, show simple preview with audio
+      const audioPlayer = document.getElementById('previewAudio');
+      if (audioPlayer && audioPlayer.src) {
+        // Audio is ready from step 2
+        document.getElementById('previewSubtitle').textContent = 
+          wizardState.subtitles.length > 0 ? wizardState.subtitles[0].text : wizardState.scriptText.substring(0, 50) + '...';
+      }
+    }
+
+    function toggleVideoMode() {
+      const mode = document.querySelector('input[name="videoMode"]:checked').value;
+      wizardState.videoMode = mode;
+      
+      const manualSection = document.getElementById('manualUploadSection');
+      const autoSection = document.getElementById('autoGenerateSection');
+      const pexelsSection = document.getElementById('pexelsGenerateSection');
+      
+      // Hide all sections first
+      manualSection.style.display = 'none';
+      autoSection.style.display = 'none';
+      pexelsSection.style.display = 'none';
+      
+      // Show selected section
+      if (mode === 'manual') {
+        manualSection.style.display = 'block';
+      } else if (mode === 'auto') {
+        autoSection.style.display = 'block';
+        // Load stock video count if not loaded
+        if (wizardState.stockVideoCount === 0) {
+          loadStockVideoCount();
+        }
+      } else if (mode === 'pexels') {
+        pexelsSection.style.display = 'block';
+      }
+    }
+    
+    async function loadStockVideoCount() {
+      try {
+        const res = await fetch('/api/assets');
+        const assets = await res.json();
+        wizardState.stockVideoCount = assets.length;
+        // Update UI
+        document.querySelectorAll('#autoGenerateSection p').forEach(p => {
+          if (p.innerHTML.includes('stock video hazır')) {
+            p.innerHTML = `📦 ${assets.length} stock video hazır!`;
+          }
+        });
+      } catch (error) {
+        console.error('Error loading stock videos:', error);
+      }
+    }
+
+    async function processStep4() {
+      const mode = wizardState.videoMode;
+      
+      if (mode === 'manual') {
+        // Manuel mod: Video yükleme kontrolü
+        const fileInput = document.getElementById('finalVideoUpload');
+        if (!fileInput.files || fileInput.files.length === 0) {
+          alert('Lütfen en az bir video dosyası yükleyin');
+          return false;
+        }
+        wizardState.videoFiles = Array.from(fileInput.files);
+      } else if (mode === 'auto') {
+        // Auto mod: Stock video kontrolü
+        if (wizardState.stockVideoCount === 0) {
+          alert('Stock videolar bulunamadı! Lütfen assets klasörüne video ekleyin.');
+          return false;
+        }
+        wizardState.videoFiles = []; // Auto mode için boş
+      } else if (mode === 'pexels') {
+        // Pexels mod: API key backend'de kontrol edilecek
+        wizardState.videoFiles = []; // Pexels mode için boş
+      }
+      
+      return true;
+    }
+
+    async function processStep5() {
+      // Show rendering state
+      document.getElementById('videoRendering').style.display = 'block';
+      document.getElementById('videoReady').style.display = 'none';
+      
+      try {
+        const formData = new FormData();
+        let endpoint = '/api/wizard/finalize-video';
+        
+        if (wizardState.videoMode === 'manual') {
+          // Manuel mod: Video dosyalarını yükle
+          wizardState.videoFiles.forEach((file) => {
+            formData.append('videos', file);
+          });
+        } else if (wizardState.videoMode === 'auto') {
+          // Auto mod: Stock videolardan oluştur
+          endpoint = '/api/wizard/auto-generate-video';
+        } else if (wizardState.videoMode === 'pexels') {
+          // Pexels mod: Pexels API'den indir
+          endpoint = '/api/wizard/pexels-generate-video';
+        }
+        
+        formData.append('scriptId', wizardState.scriptId);
+        formData.append('audioPath', wizardState.audioPath);
+        formData.append('subtitles', JSON.stringify(wizardState.subtitles));
+        formData.append('scriptText', wizardState.scriptText);
+        
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (!res.ok) {
+          const error = await res.json();
+          throw new Error(error.error || 'Video oluşturulamadı');
+        }
+        
+        const data = await res.json();
+        wizardState.finalVideoId = data.videoId;
+        
+        // Show final video
+        document.getElementById('videoRendering').style.display = 'none';
+        document.getElementById('videoReady').style.display = 'block';
+        document.getElementById('finalVideo').src = data.videoUrl;
+        
+      } catch (error) {
+        alert('Video oluşturulurken hata: ' + error.message);
+        document.getElementById('videoRendering').style.display = 'none';
+        // Go back to step 4
+        wizardState.currentStep = 4;
+        updateWizardUI();
+      }
+    }
+
+    function downloadVideo() {
+      if (wizardState.finalVideoId) {
+        const videoUrl = `/videos/${wizardState.finalVideoId}.mp4`;
+        const a = document.createElement('a');
+        a.href = videoUrl;
+        a.download = `${wizardState.finalVideoId}.mp4`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+    }
+
+    // Add event listener for multiple video upload
+    document.getElementById('finalVideoUpload').addEventListener('change', function(e) {
+      const files = Array.from(e.target.files);
+      const listDiv = document.getElementById('uploadedVideosList');
+      
+      if (files.length === 0) {
+        listDiv.innerHTML = '';
+        return;
+      }
+      
+      listDiv.innerHTML = `
+        <div style="background: #e8f5e9; padding: 10px; border-radius: 5px; margin-top: 10px;">
+          <strong style="color: #2e7d32;">📹 ${files.length} video seçildi:</strong>
+          <ul style="margin: 5px 0 0 20px; padding: 0; color: #1b5e20;">
+            ${files.map((f, i) => `<li>${i + 1}. ${f.name} (${(f.size / 1024 / 1024).toFixed(2)} MB)</li>`).join('')}
+          </ul>
+          <p style="margin: 10px 0 0 0; font-size: 13px; color: #388e3c;">
+            💡 Bu videolar audio uzunluğuna göre eşit parçalara bölünüp birleştirilecek!
+          </p>
+        </div>
+      `;
+    });
+    
+    // Show categories selector modal (clickable to filter trends)
+    function showCategoriesSelector() {
+      if (youtubeCategories.length === 0) {
+        alert('Kategoriler henüz yüklenmedi.');
+        return;
+      }
+      
+      const modal = document.createElement('div');
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px;';
+      
+      // Sort categories: assignable first, then by title
+      const sortedCategories = [...youtubeCategories].sort((a, b) => {
+        if (a.assignable && !b.assignable) return -1;
+        if (!a.assignable && b.assignable) return 1;
+        return a.title.localeCompare(b.title, 'tr');
+      });
+      
+      modal.innerHTML = `
+        <div style="background: white; border-radius: 15px; max-width: 800px; max-height: 85vh; overflow-y: auto; padding: 30px; position: relative;">
+          <button onclick="this.closest('div[style*=fixed]').remove()" style="position: absolute; top: 15px; right: 15px; background: #f44336; color: white; border: none; border-radius: 50%; width: 35px; height: 35px; font-size: 20px; cursor: pointer;">×</button>
+          
+          <h2 style="color: #667eea; margin-bottom: 10px;">📂 Kategori Seçin</h2>
+          <p style="color: #666; margin-bottom: 20px;">Bir kategoriye tıklayarak o kategorideki trend Shorts'ları görün</p>
+          
+          <div style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #667eea;">
+            <p style="margin: 0; color: #667eea; font-size: 0.95em; line-height: 1.6;">
+              <strong>💡 İPUCU:</strong> Her kategoriden sadece 60 saniye ve altı videolar gösterilir (Shorts)
+            </p>
+          </div>
+          
+          <!-- All Categories Option -->
+          <div onclick="loadTrends('all', 'TR'); this.closest('div[style*=fixed]').remove();" 
+               style="background: ${selectedCategoryId === 'all' ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : '#f0f7ff'}; 
+                      color: ${selectedCategoryId === 'all' ? 'white' : '#333'}; 
+                      padding: 15px; border-radius: 10px; margin-bottom: 15px; cursor: pointer; 
+                      border: 3px solid ${selectedCategoryId === 'all' ? '#667eea' : 'transparent'}; 
+                      transition: all 0.2s; font-weight: 600; text-align: center; font-size: 1.1em;"
+               onmouseover="if('${selectedCategoryId}' !== 'all') this.style.background='#e3f2fd'"
+               onmouseout="if('${selectedCategoryId}' !== 'all') this.style.background='#f0f7ff'">
+            🌐 Tüm Kategoriler ${selectedCategoryId === 'all' ? '✓ (Seçili)' : ''}
+          </div>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px;">
+            ${sortedCategories.map(cat => `
+              <div onclick="loadTrends('${cat.id}', 'TR'); this.closest('div[style*=fixed]').remove();" 
+                   style="background: ${cat.id === selectedCategoryId ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : (cat.assignable ? '#f0f7ff' : '#f5f5f5')}; 
+                          color: ${cat.id === selectedCategoryId ? 'white' : '#333'};
+                          padding: 15px; border-radius: 10px; 
+                          border-left: 4px solid ${cat.id === selectedCategoryId ? '#667eea' : (cat.assignable ? '#667eea' : '#ccc')}; 
+                          cursor: ${cat.assignable ? 'pointer' : 'not-allowed'}; 
+                          opacity: ${cat.assignable ? '1' : '0.6'};
+                          transition: all 0.2s;"
+                   onmouseover="if(${cat.assignable} && '${cat.id}' !== '${selectedCategoryId}') this.style.transform='translateY(-2px)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.1)'"
+                   onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                <div style="font-weight: 600; margin-bottom: 5px; font-size: 1.05em;">${cat.title}</div>
+                <div style="font-size: 0.85em; opacity: 0.8;">ID: ${cat.id}</div>
+                ${cat.id === selectedCategoryId ? '<div style="font-size: 0.85em; margin-top: 8px; font-weight: 600;">✓ Seçili</div>' : ''}
+                ${!cat.assignable ? '<div style="font-size: 0.75em; color: #f44336; margin-top: 5px; font-weight: 600;">⚠️ Kullanılamaz</div>' : ''}
+              </div>
+            `).join('')}
+          </div>
+          
+          <div style="margin-top: 25px; padding: 15px; background: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107;">
+            <p style="margin: 0; color: #856404; font-size: 0.9em; line-height: 1.6;">
+              <strong>📊 İstatistikler:</strong><br>
+              • Toplam Kategori: ${youtubeCategories.length}<br>
+              • Kullanılabilir: ${youtubeCategories.filter(c => c.assignable).length}<br>
+              • Şu an seçili: <strong>${selectedCategoryId === 'all' ? 'Tüm Kategoriler' : (youtubeCategories.find(c => c.id === selectedCategoryId)?.title || 'Bilinmeyen')}</strong>
+            </p>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      modal.onclick = (e) => {
+        if (e.target === modal) modal.remove();
+      };
+    }
+    
+    // Load initial data
     loadStatus();
     loadVideos();
+    loadYouTubeCategories(); // Load categories on page load
+    
+    // Refresh every 10 seconds (but skip if media is playing)
     setInterval(() => {
+      if (isMediaPlaying()) {
+        console.log('Skipping refresh - media is playing');
+        return;
+      }
+      
       loadStatus();
-      loadVideos();
-    }, 5000);
+      if (currentTab === 'videos') loadVideos();
+      else if (currentTab === 'metadata') loadMetadata();
+    }, 10000);
   </script>
 </body>
 </html>
-

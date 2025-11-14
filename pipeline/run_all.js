@@ -109,17 +109,28 @@ async function orchestrate() {
   const args = parseArgs(process.argv.slice(2));
   const count = args.count ?? '1';
   const category = args.category ? ` --category="${args.category}"` : '';
-  const pythonExec = args.python ?? 'python3';
+  
+  // Use virtual environment Python if available
+  const venvPython = resolve(ROOT_DIR, '.venv', 'bin', 'python3');
+  const pythonExec = existsSync(venvPython) ? venvPython : (args.python ?? 'python3');
+  
   const privacy = args.privacy ?? 'unlisted';
   const dryRun = args['dry-run'] === 'true' ? ' --dry-run=true' : '';
 
+  console.log(`\n🚀 Starting full pipeline with count=${count}, category=${args.category || 'default'}`);
+  
   run(`node src/topic-generator.js --count=${count}${category}`);
   run('node src/script-generator.js');
   run('node src/tts-generator.js');
+  
+  console.log(`\n🎬 Rendering videos with Python: ${pythonExec}`);
   await renderPendingVideos(pythonExec);
+  
   run('node src/subtitle-sync.js');
   run('node src/meta-generator.js');
   run(`node src/youtube-uploader.js --privacy=${privacy}${dryRun}`);
+  
+  console.log(`\n✅ Pipeline complete!`);
 }
 
 orchestrate().catch((error) => {

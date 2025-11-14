@@ -3,17 +3,22 @@ import json
 import random
 from pathlib import Path
 
-from moviepy import audio as moviepy_audio
-from moviepy import video as moviepy_video
-from moviepy.editor import (
-    AudioFileClip,
-    CompositeAudioClip,
-    CompositeVideoClip,
-    TextClip,
-    VideoFileClip,
-    afx,
-    vfx,
-)
+try:
+    # MoviePy 2.x
+    from moviepy import AudioFileClip, CompositeAudioClip, CompositeVideoClip, TextClip, VideoFileClip
+    from moviepy import audio_fx as afx
+    from moviepy import video_fx as vfx
+except ImportError:
+    # MoviePy 1.x fallback
+    from moviepy.editor import (
+        AudioFileClip,
+        CompositeAudioClip,
+        CompositeVideoClip,
+        TextClip,
+        VideoFileClip,
+        afx,
+        vfx,
+    )
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 ASSETS_DIR = ROOT_DIR / "assets"

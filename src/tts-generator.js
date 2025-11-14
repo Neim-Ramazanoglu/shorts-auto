@@ -13,6 +13,16 @@ const AUDIO_DIR = resolve(ROOT_DIR, 'pipeline', 'audio');
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 2000;
 
+// Helper function to remove emojis and special symbols from text
+function removeEmojis(text) {
+  if (!text) return text;
+  return text
+    .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F1E0}-\u{1F1FF}]/gu, '')
+    .replace(/[\u{1F004}\u{1F0CF}\u{1F170}-\u{1F251}\u{1F300}-\u{1F5FF}\u{1F600}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '')
+    .replace(/[👀👁️🎬🎥🎯🎨🎭🎪🎤🎧🎵🎶🎹🎸🎺🎻🥁🎼🔥💡✨⭐🌟💫🚀🎉🎊🎈🎁🏆🥇🥈🥉💪👍👏🙌🤝💰💸💵💴💶💷💳💎📱📲📞☎️📧📨📩📤📥📦📫📪📬📭📮📯📜📃📄📰🗞️📑🔖🏷️💼📁📂🗂️📅📆🗓️📇📈📉📊📋📌📍📎🖇️✂️📏📐🔒🔓🔐🔑🗝️🔨⚒️🛠️⚙️🔧🔩⚡🔌💻⌨️🖥️🖨️🖱️🖲️💾💿📀🎮🕹️🏁🚩🎌🏴🏳️👠💕]/g, '')
+    .trim();
+}
+
 async function ensureDirs() {
   if (!existsSync(SCRIPTS_DIR)) {
     throw new Error('Missing pipeline/scripts directory. Run script-generator first.');
@@ -92,11 +102,21 @@ async function synthesizeWithOpenAI(scriptRecord) {
     throw new Error('Missing OPENAI_API_KEY/TTS_API_KEY for OpenAI TTS.');
   }
 
+  // Select random voice for variety (mix of male and female voices)
+  const voices = ['alloy', 'echo', 'onyx', 'nova', 'shimmer', 'onyx', 'echo']; // onyx & echo are male (repeated for balance)
+  const selectedVoice = voices[Math.floor(Math.random() * voices.length)];
+  
+  console.log(`🎤 Using TTS voice: ${selectedVoice} for ${scriptRecord.id}`);
+  
+
+  // Remove emojis from script before TTS
+  const cleanScript = removeEmojis(scriptRecord.script);
+  
   const requestPayload = {
-    model: 'gpt-4o-mini-tts',
-    voice: 'alloy',
+    model: 'tts-1',
+    voice: selectedVoice,
     format: 'mp3',
-    input: scriptRecord.script
+    input: cleanScript
   };
 
   const response = await fetch('https://api.openai.com/v1/audio/speech', {
